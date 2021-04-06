@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "alwaysStrict": true,
+    "baseUrl": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -14,9 +15,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
   "exclude": ["node_modules"],
   "include": ["**/*.ts", "**/*.tsx"]
