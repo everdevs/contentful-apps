@@ -11,7 +11,7 @@ export interface Asset {
 
 export interface AssetEntry {
 	fields: {
-		file: { en: Asset };
+		file: Record<string, Asset>;
 		description: string;
 		title: string;
 	};

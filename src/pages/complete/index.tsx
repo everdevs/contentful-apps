@@ -43,7 +43,8 @@ const ImageApp: React.FC<AppProps> = ({ sdk }) => {
 			const detachImageChangeHandler = sdk.entry.fields.image.onValueChanged(value => {
 				if (value) {
 					void sdk.space.getAsset<AssetEntry>(value.sys.id).then(asset => {
-						setImgSrc(asset.fields.file.en.url);
+						// For multiple locales, this should have a switch
+						setImgSrc(asset.fields.file[sdk.locales.default].url);
 					});
 				} else {
 					setImgSrc("");
@@ -70,7 +71,7 @@ const ImageApp: React.FC<AppProps> = ({ sdk }) => {
 		const entryLink = sdk.entry.fields.image.getValue();
 		if (entryLink) {
 			void sdk.space.getAsset<AssetEntry>(entryLink.sys.id).then(asset => {
-				setImgSrc(asset.fields.file.en.url);
+				setImgSrc(asset.fields.file[sdk.locales.default].url);
 			});
 		}
 	}, [sdk]);
@@ -90,6 +91,7 @@ const ImageApp: React.FC<AppProps> = ({ sdk }) => {
 							>
 								<Option value="">None</Option>
 								<Option value="face">Face</Option>
+								<Option value="faces">Faces</Option>
 								<Option value="center">Center</Option>
 								<Option value="top">Top</Option>
 								<Option value="top_right">Top Right</Option>
@@ -104,11 +106,12 @@ const ImageApp: React.FC<AppProps> = ({ sdk }) => {
 								id="fit"
 								name="fit"
 								labelText="Fit"
-								required={focus !== ""}
 								value={fit}
 								onChange={saveFit}
 							>
 								<Option value="">None</Option>
+								<Option value="scale">Scale</Option>
+								<Option value="pad">Pad</Option>
 								<Option value="fill">Fill</Option>
 								<Option value="crop">Crop</Option>
 								<Option value="thumb">Thumb</Option>
@@ -138,7 +141,7 @@ const ImageApp: React.FC<AppProps> = ({ sdk }) => {
 					)}
 				</>
 			) : (
-				<Note noteType="warning">Please select a file first</Note>
+				<Note noteType="primary">Please select an image</Note>
 			)}
 		</div>
 	);
