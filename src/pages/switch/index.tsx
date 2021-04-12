@@ -1,12 +1,9 @@
 import Spaced from "@/components/spaced";
+import { AppProps } from "@/types/app";
 import withSDK from "@/utils/with-sdk";
 import { FieldExtensionSDK } from "@contentful/app-sdk";
 import { Switch } from "@contentful/forma-36-react-components";
 import React from "react";
-
-export interface AppProps {
-	sdk: FieldExtensionSDK;
-}
 
 const SwitchApp: React.FC<AppProps> = ({ sdk }) => {
 	const [fieldValue, setFieldValue] = React.useState(sdk.field.getValue());
