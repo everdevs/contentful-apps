@@ -8,10 +8,31 @@ export interface WithSDKProps<S extends KnownSDK> {
 }
 
 const withSDK = <S extends KnownSDK, T = Record<string, unknown>>(
-	Component: React.ComponentType<WithSDKProps<S> & T>
+	Component: React.ComponentType<WithSDKProps<S> & T>,
+	{
+		autoResizer = true,
+	}: {
+		autoResizer?: boolean;
+	} = {}
 ) => {
 	return (props: T) => {
 		const sdk = useSDK();
+
+		React.useEffect(() => {
+			const subscribe = () => {
+				// Enable autoResizer if available and requested
+				if (sdk && "window" in sdk && autoResizer) {
+					sdk.window.startAutoResizer();
+
+					return () => {
+						sdk.window.stopAutoResizer();
+					};
+				}
+			};
+
+			return subscribe();
+		}, [sdk]);
+
 		return sdk ? <Component {...props} sdk={sdk as S} /> : <Spinner size="large" />;
 	};
 };
