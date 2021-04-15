@@ -17,7 +17,7 @@ const SwitchApp: React.FC<AppProps> = ({ sdk }) => {
 			sdk.window.startAutoResizer();
 
 			// Handler for external field value changes (e.g. when multiple authors are working on the same entry).
-			const detachExternalFit = sdk.field.onValueChanged(value => {
+			const detachExternalChange = sdk.field.onValueChanged(value => {
 				setFieldValue(value);
 			});
 
@@ -27,7 +27,7 @@ const SwitchApp: React.FC<AppProps> = ({ sdk }) => {
 				sdk.window.stopAutoResizer();
 
 				// Detach external changes
-				detachExternalFit();
+				detachExternalChange();
 			};
 		};
 
