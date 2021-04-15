@@ -15,6 +15,11 @@ declare global {
 	}
 }
 
+/**
+ * Since the Contentful sdk is attached to window we need to initialize it on the client to prevent
+ * SSR issues when next.js builds the pages.
+ * @see {@link https://github.com/contentful/extensions/issues/354}
+ */
 const useSDK = () => {
 	const [knownSDK, setKnownSDK] = React.useState<null | KnownSDK>(null);
 	React.useEffect(() => {
